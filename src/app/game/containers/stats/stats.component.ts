@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GameState} from "../../game";
+import {Game, GameState} from "../../game";
 
 @Component({
   selector: 'app-stats',
@@ -8,7 +8,7 @@ import {GameState} from "../../game";
 })
 export class StatsComponent implements OnInit {
 
-  @Input() gameState!: GameState;
+  @Input() game!: Game;
 
   constructor() { }
 

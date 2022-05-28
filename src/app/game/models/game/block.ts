@@ -1,13 +1,11 @@
-import {Images} from "./images";
-import {Building, Prestige} from "./infrastructure";
-
+import {InfrastructureUnit} from "./infrastructure";
 
 export enum BlockType {
   BUILDING,
   ROAD
 }
 
-export interface Block<T> {
+export interface Block<T extends InfrastructureUnit> {
   name: string;
   type: BlockType;
   image: HTMLImageElement;
@@ -21,33 +19,4 @@ export function createImage(path: string): HTMLImageElement {
   return image;
 }
 
-export class BasicBlock implements Block<Building> {
-
-  name = 'Basic block';
-  type = BlockType.BUILDING;
-  price = 1000;
-  data: Building = {
-    capability: 10,
-    prestige: Prestige.LOW
-  }
-
-  get image(): HTMLImageElement {
-    return createImage(Images.block1);
-  }
-
-}
-
-export class GreyBlock implements Block<Building> {
-  name = 'Grey block';
-  type = BlockType.BUILDING;
-  price = 1000;
-  data: Building = {
-    capability: 10,
-    prestige: Prestige.LOW
-  }
-
-  get image(): HTMLImageElement {
-    return createImage(Images.block1);
-  }
-}
-
+export const blockMap: Map<string, Block<any>> = new Map<string, Block<any>>([]);

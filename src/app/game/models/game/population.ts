@@ -16,7 +16,12 @@ export interface Profession {
 
 export class FactoryWorker implements Profession {
   name = 'Factory worker';
-  earnings = randomInteger(2000, 4000);
+  earnings = randomInteger(500, 1000);
+}
+
+export class Engineer implements Profession {
+  name = 'Engineer';
+  earnings = randomInteger(1000, 1500);
 }
 
 export class DefaultCitizen implements Citizen {

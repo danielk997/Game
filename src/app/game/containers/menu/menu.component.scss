@@ -1,4 +1,14 @@
-:host { width: 40%;
+:host {
+  width: 40%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .block-types {
+    display: flex;
+  }
 }
 
 .block-menu {

@@ -25,4 +25,8 @@ export class AppComponent implements OnInit {
   onBlockAdd(block: Block<any>) {
     this.game.addBlock(block);
   }
+
+  getTax() {
+    console.log(this.game.getTax())
+  }
 }

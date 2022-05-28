@@ -1,5 +1,6 @@
 import {Images} from "../../images";
 import {Block, BlockType, createImage} from "../../block";
+import {Road} from "../../infrastructure";
 
 export class RoadName {
   static road1 = 'Road 1';
@@ -15,109 +16,90 @@ export class RoadName {
   static road11 = 'Road 11';
 }
 
-abstract class BasicRoadBase implements Block<any> {
+abstract class BasicRoadBase implements Block<Road> {
   abstract name: string;
   type = BlockType.ROAD;
   price = 1000;
-  data: any;
+  data = {
+    maintenanceCost: 10,
+    lifeQuality: 1
+  }
 
   abstract get image(): HTMLImageElement;
 }
 
 export class RoadVertical extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road1;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadVertical);
   }
 }
 
 export class RoadHorizontal extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road2;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadHorizontal);
   }
 }
 
 export class RoadMerge extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road3;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadMerge);
   }
 }
 
 export class RoadRBL extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road4;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadRBL);
   }
 }
 
 export class RoadTRB extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road5;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadTRB);
   }
 }
 
 export class RoadTBL extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road6;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadTBL);
   }
 }
 
 export class RoadTRL extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road7;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadTRL);
   }
 }
 
 export class RoadBL extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road8;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadBL);
   }
 }
 
 export class RoadRB extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road9;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadRB);
   }
 }
 
 export class RoadTL extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road10;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadTL);
   }
 }
 
 export class RoadTR extends BasicRoadBase implements Block<any> {
-
   name = RoadName.road11;
-
   get image(): HTMLImageElement {
     return createImage(Images.roadTR);
   }

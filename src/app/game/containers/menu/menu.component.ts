@@ -1,15 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {
-  basicRoadMap,
-  RoadBL,
-  RoadHorizontal,
-  RoadMerge, RoadRB,
-  RoadRBL,
-  RoadTBL, RoadTL, RoadTR,
-  RoadTRB,
-  RoadTRL,
-  RoadVertical
-} from "../../models/game/blocks/roads/basic";
+import {basicRoadMap} from "../../models/game/blocks/roads/basic";
+import {basicBuildingMap} from "../../models/game/blocks/buildings/basic";
+import {BlockType} from "../../models/game/block";
 
 @Component({
   selector: 'app-menu',
@@ -19,14 +11,15 @@ import {
 export class MenuComponent implements OnInit {
 
   @Output() blockTypeChange: EventEmitter<any> = new EventEmitter<any>();
-
-  // roads = new Map<string, Block<Road>>([
-  //   ['x', new RoadVertical()],
-  //   ['y', new RoadVertical()],
-  // ]);
+  blockType: BlockType = BlockType.ROAD;
+  BlockType = BlockType;
 
   roads = [
     ...basicRoadMap.values()
+  ]
+
+  buildings = [
+    ...basicBuildingMap.values()
   ]
 
   constructor() {
@@ -35,4 +28,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onBlockTypeChange(type: BlockType) {
+    this.blockType = type;
+  }
 }

@@ -1,15 +1,23 @@
-<!--<select (change)="blockTypeChange.emit($event)">-->
-<!--  <option value="basic">Basic</option>-->
-<!--  <option value="road-vertical">Road 1</option>-->
-<!--  <option value="road-horizontal">Road 2</option>-->
-<!--  <option value="road-merge">Road 3</option>-->
-<!--</select>-->
-
-<div class="block-menu">
-  <div class="block" *ngFor="let road of roads">
-    <p style="margin: 0 0 5px 0">{{road.name}}</p>
-    <img (click)="blockTypeChange.emit(road)" [src]="road.image.src" [alt]="road.name">
-    <p style="margin: 5px 0 0 0">${{road.price}}</p>
+<div class="wrapper">
+  <div class="block-types">
+    <button (click)="onBlockTypeChange(BlockType.ROAD)">Roads</button>
+    <button (click)="onBlockTypeChange(BlockType.BUILDING)">Buildings</button>
+    <button>Plants</button>
+  </div>
+  <div class="block-menu">
+    <ng-container *ngIf="blockType === BlockType.ROAD">
+      <div class="block" *ngFor="let road of roads">
+        <p style="margin: 0 0 5px 0">{{road.name}}</p>
+        <img (click)="blockTypeChange.emit(road)" [src]="road.image.src" [alt]="road.name">
+        <p style="margin: 5px 0 0 0">${{road.price}}</p>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="blockType === BlockType.BUILDING">
+      <div class="block" *ngFor="let building of buildings">
+        <p style="margin: 0 0 5px 0">{{building.name}}</p>
+        <img (click)="blockTypeChange.emit(building)" [src]="building.image.src" [alt]="building.name">
+        <p style="margin: 5px 0 0 0">${{building.price}}</p>
+      </div>
+    </ng-container>
   </div>
 </div>
-

@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {BasicBlock, Block} from "../../models/game/block";
+import {Block} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
+import {BasicBuilding, basicBuildingMap} from "../../models/game/blocks/buildings/basic";
 
 @Component({
   selector: 'app-canvas',
@@ -152,5 +153,8 @@ function getBlock(name: string): Block<any> {
   if (basicRoadMap.get(name))
     return basicRoadMap.get(name)!
 
-  return new BasicBlock();
+  if (basicBuildingMap.get(name))
+    return basicBuildingMap.get(name)!
+
+  return new BasicBuilding();
 }

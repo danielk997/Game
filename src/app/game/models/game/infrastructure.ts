@@ -9,11 +9,16 @@ export interface Infrastructure {
   roads: Road[];
 }
 
-export interface Building {
+export interface InfrastructureUnit {
+  maintenanceCost: number;
+  lifeQuality: number;
+}
+
+export interface Building extends InfrastructureUnit {
   capability: number;
   prestige: Prestige;
 }
 
-export interface Road {
+export interface Road extends InfrastructureUnit {
 
 }
