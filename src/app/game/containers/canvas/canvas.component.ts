@@ -1,4 +1,8 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {CanvasFrame} from "../../models/canvas/canvas-frame";
+import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
+import {BasicBlock, Block, GreyBlock, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
+import {Position} from "../../models/canvas/position";
 
 @Component({
   selector: 'app-canvas',
@@ -8,8 +12,9 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 export class CanvasComponent implements AfterViewInit, OnInit {
 
   @ViewChild('canvasElement') canvas: any;
-  gridSize = 20;
-  canvasSize = {width: 1400 / 2, height: 1400 / 2};
+  @Input() blockType = 'basic';
+  gridSize = 10;
+  canvasSize = {width: 1000 / 2, height: 1000 / 2};
   ctx!: CanvasRenderingContext2D;
   frames: CanvasFrame[] = [];
   currentFrame?: CanvasFrame;
@@ -33,13 +38,14 @@ export class CanvasComponent implements AfterViewInit, OnInit {
     this.frames
       .filter(it => it.data)
       .forEach(it => {
-      this.drawRect({
-        x: it?.x,
-        y: it?.y,
-        width: it?.size,
-        height: it?.size
+        this.drawImage(
+          it.data.image, {
+            x: it?.x,
+            y: it?.y,
+            width: it?.size,
+            height: it?.size
+          })
       })
-    })
     this.drawRect({
       color: 'silver',
       x: this.currentFrame?.x,
@@ -55,44 +61,56 @@ export class CanvasComponent implements AfterViewInit, OnInit {
 
   onClick() {
     this.frames = this.frames.map(it => {
-      if(it.id === this.currentFrame?.id) {
+      if (it.id === this.currentFrame?.id) {
         return {
           ...it,
-          data: 'Data 123'
+          data: getBlock(this.blockType)
         }
       }
-
       return it
     });
 
-    this.drawRect({
+    this.drawImage(this.currentFrame?.data?.image, {
       x: this.currentFrame?.x,
       y: this.currentFrame?.y,
       width: this.currentFrame?.size,
       height: this.currentFrame?.size
     });
-
-    console.log(this.frames)
   }
 
-  private getFrame(position: { x: number, y: number }): CanvasFrame | undefined {
+  private getFrame(position: Position): CanvasFrame | undefined {
     return this.frames.find(it => {
-      const ratio = this.canvasSize.width / this.gridSize;
-      const x = Math.floor(position.x / ratio);
-      const y = Math.floor(position.y / ratio);
-
-      return it.x / ratio === x && it.y / ratio === y;
+      return this.isFrameOnClientPosition(position, it);
     });
   }
 
+  private isFrameOnClientPosition(position: Position, frame: CanvasFrame): boolean {
+    const ratio = this.canvasSize.width / this.gridSize;
+    const x = Math.floor(position.x / ratio);
+    const y = Math.floor(position.y / ratio);
+
+    return frame.x / ratio === x && frame.y / ratio === y;
+  }
+
   private fillBackground() {
-    this.ctx.fillStyle = 'lightblue'
+    this.ctx.fillStyle = 'grey'
     this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
   }
 
   private drawRect(options: DrawRectOptions) {
     this.ctx.fillStyle = options.color ?? '#000';
     this.ctx.fillRect(
+      options.x ?? 0,
+      options.y ?? 0,
+      options.width ?? 10,
+      options.height ?? 10
+    );
+  }
+
+  private drawImage(image: HTMLImageElement, options: DrawRectOptions) {
+
+    this.ctx.drawImage(
+      image,
       options.x ?? 0,
       options.y ?? 0,
       options.width ?? 10,
@@ -118,13 +136,6 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 }
 
-interface DrawRectOptions {
-  x?: number,
-  y?: number,
-  width?: number,
-  height?: number,
-  color?: string
-}
 
 function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: number } {
   const rect = canvas.getBoundingClientRect();
@@ -134,10 +145,17 @@ function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: numbe
   };
 }
 
-interface CanvasFrame {
-  id: string;
-  x: number;
-  y: number;
-  size: number;
-  data?: any
+function getBlock(name: string): Block {
+  switch (name) {
+    case 'basic':
+      return new BasicBlock();
+    case 'road-vertical':
+      return new RoadVertical();
+    case 'road-horizontal':
+      return new RoadHorizontal();
+    case 'road-merge':
+      return new RoadMerge();
+  }
+
+  return new BasicBlock();
 }

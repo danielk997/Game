@@ -1,1 +1,2 @@
-<router-outlet></router-outlet>
+<app-canvas [blockType]="blockType"></app-canvas>
+<app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
