@@ -1,2 +1,9 @@
-<app-canvas [blockType]="blockType"></app-canvas>
-<app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
+<div class="wrapper">
+  <app-stats [gameState]="game.state"></app-stats>
+  <app-canvas
+    (blockAdd)="onBlockAdd($event)"
+    [blockType]="blockType">
+  </app-canvas>
+  <app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
+</div>
+

@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {BasicBlock, Block, GreyBlock, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
+import {BasicBlock, Block, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
+import {Game} from "../../game";
 
 @Component({
   selector: 'app-canvas',
@@ -12,6 +13,7 @@ import {Position} from "../../models/canvas/position";
 export class CanvasComponent implements AfterViewInit, OnInit {
 
   @ViewChild('canvasElement') canvas: any;
+  @Output() blockAdd: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
   @Input() blockType = 'basic';
   gridSize = 10;
   canvasSize = {width: 1000 / 2, height: 1000 / 2};
@@ -19,7 +21,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   frames: CanvasFrame[] = [];
   currentFrame?: CanvasFrame;
 
-  constructor() {
+  constructor(public game: Game) {
   }
 
   ngOnInit(): void {
@@ -60,15 +62,19 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 
   onClick() {
+    const block = getBlock(this.blockType);
+
     this.frames = this.frames.map(it => {
       if (it.id === this.currentFrame?.id) {
         return {
           ...it,
-          data: getBlock(this.blockType)
+          data: block
         }
       }
       return it
     });
+
+    this.blockAdd.emit(block);
 
     this.drawImage(this.currentFrame?.data?.image, {
       x: this.currentFrame?.x,
@@ -145,7 +151,7 @@ function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: numbe
   };
 }
 
-function getBlock(name: string): Block {
+function getBlock(name: string): Block<any> {
   switch (name) {
     case 'basic':
       return new BasicBlock();
