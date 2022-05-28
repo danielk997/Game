@@ -8,6 +8,7 @@ export enum BlockType {
 }
 
 export interface Block<T> {
+  name: string;
   type: BlockType;
   image: HTMLImageElement;
   price: number;
@@ -22,71 +23,66 @@ function createImage(path: string): HTMLImageElement {
 
 export class BasicBlock implements Block<Building> {
 
+  name = 'Basic block';
   type = BlockType.BUILDING;
+  price = 1000;
+  data: Building = {
+    capability: 10,
+    prestige: Prestige.LOW
+  }
 
   get image(): HTMLImageElement {
     return createImage(Images.block1);
   }
 
-  price = 1000;
-
-  data: Building = {
-    capability: 10,
-    prestige: Prestige.LOW
-  }
 }
 
 export class GreyBlock implements Block<Building> {
-
+  name = 'Grey block';
   type = BlockType.BUILDING;
-
-  get image(): HTMLImageElement {
-    return createImage(Images.block1);
-  }
-
   price = 1000;
-
   data: Building = {
     capability: 10,
     prestige: Prestige.LOW
+  }
+
+  get image(): HTMLImageElement {
+    return createImage(Images.block1);
   }
 }
 
 export class RoadVertical implements Block<any> {
 
+  name = 'Road vertical';
   type = BlockType.ROAD;
+  price = 1000;
+  data: any;
 
   get image(): HTMLImageElement {
     return createImage(Images.roadVertical);
   }
-
-  price = 1000;
-
-  data: any;
 }
 
 export class RoadHorizontal implements Block<any> {
 
+  name = 'Road horizontal';
   type = BlockType.ROAD;
+  price = 1000;
+  data: any;
 
   get image(): HTMLImageElement {
     return createImage(Images.roadHorizontal);
   }
-
-  price = 1000;
-
-  data: any;
 }
 
 export class RoadMerge implements Block<any> {
 
+  name = 'Road merge';
   type = BlockType.ROAD;
+  price = 1000;
+  data: any;
 
   get image(): HTMLImageElement {
     return createImage(Images.roadMerge);
   }
-
-  price = 1000;
-
-  data: any;
 }

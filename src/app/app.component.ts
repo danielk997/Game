@@ -9,7 +9,7 @@ import {Block} from "./game/models/game/block";
 })
 export class AppComponent implements OnInit {
   title = 'game';
-  blockType = 'basic';
+  blockName = 'basic';
 
   constructor(public game: Game) {
   }
@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
     this.game.start();
   }
 
-  onBlockTypeChange(event: any) {
-    this.blockType = event.target.value;
+  onBlockTypeChange(block: Block<any>) {
+    this.blockName = block.name;
   }
 
   onBlockAdd(block: Block<any>) {

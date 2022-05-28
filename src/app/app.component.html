@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <app-stats [gameState]="game.state"></app-stats>
+<!--  <app-stats [gameState]="game.state"></app-stats>-->
   <app-canvas
     (blockAdd)="onBlockAdd($event)"
-    [blockType]="blockType">
+    [blockName]="blockName">
   </app-canvas>
   <app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
 </div>

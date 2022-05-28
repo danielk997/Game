@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {BasicBlock, Block, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
+import {BasicBlock, Block, GreyBlock, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
 import {Game} from "../../game";
 
@@ -14,15 +14,12 @@ export class CanvasComponent implements AfterViewInit, OnInit {
 
   @ViewChild('canvasElement') canvas: any;
   @Output() blockAdd: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
-  @Input() blockType = 'basic';
+  @Input() blockName = '';
   gridSize = 10;
   canvasSize = {width: 1000 / 2, height: 1000 / 2};
   ctx!: CanvasRenderingContext2D;
   frames: CanvasFrame[] = [];
   currentFrame?: CanvasFrame;
-
-  constructor(public game: Game) {
-  }
 
   ngOnInit(): void {
   }
@@ -62,7 +59,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 
   onClick() {
-    const block = getBlock(this.blockType);
+    const block = getBlock(this.blockName);
 
     this.frames = this.frames.map(it => {
       if (it.id === this.currentFrame?.id) {
@@ -153,13 +150,15 @@ function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: numbe
 
 function getBlock(name: string): Block<any> {
   switch (name) {
-    case 'basic':
+    case 'Basic block':
       return new BasicBlock();
-    case 'road-vertical':
+    case 'Grey block':
+      return new GreyBlock();
+    case 'Road vertical':
       return new RoadVertical();
-    case 'road-horizontal':
+    case 'Road horizontal':
       return new RoadHorizontal();
-    case 'road-merge':
+    case 'Road merge':
       return new RoadMerge();
   }
 

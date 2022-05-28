@@ -1,6 +1,15 @@
-<select (change)="blockTypeChange.emit($event)">
-  <option value="basic">Basic</option>
-  <option value="road-vertical">Road 1</option>
-  <option value="road-horizontal">Road 2</option>
-  <option value="road-merge">Road 3</option>
-</select>
+<!--<select (change)="blockTypeChange.emit($event)">-->
+<!--  <option value="basic">Basic</option>-->
+<!--  <option value="road-vertical">Road 1</option>-->
+<!--  <option value="road-horizontal">Road 2</option>-->
+<!--  <option value="road-merge">Road 3</option>-->
+<!--</select>-->
+
+<div class="block-menu">
+  <div class="block" *ngFor="let road of roads">
+    <p style="margin: 0 0 5px 0">{{road.name}}</p>
+    <img (click)="blockTypeChange.emit(road)" [src]="road.image.src" [alt]="road.name">
+    <p style="margin: 5px 0 0 0">${{road.price}}</p>
+  </div>
+</div>
+
