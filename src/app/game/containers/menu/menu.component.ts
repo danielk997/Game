@@ -1,6 +1,15 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {BasicBlock, Block, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
-import {Road} from "../../models/game/infrastructure";
+import {
+  basicRoadMap,
+  RoadBL,
+  RoadHorizontal,
+  RoadMerge, RoadRB,
+  RoadRBL,
+  RoadTBL, RoadTL, RoadTR,
+  RoadTRB,
+  RoadTRL,
+  RoadVertical
+} from "../../models/game/blocks/roads/basic";
 
 @Component({
   selector: 'app-menu',
@@ -17,10 +26,7 @@ export class MenuComponent implements OnInit {
   // ]);
 
   roads = [
-    new RoadVertical(),
-    new RoadHorizontal(),
-    new RoadMerge(),
-    new BasicBlock()
+    ...basicRoadMap.values()
   ]
 
   constructor() {

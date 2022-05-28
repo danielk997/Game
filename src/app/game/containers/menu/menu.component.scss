@@ -4,8 +4,10 @@
 .block-menu {
   display: flex;
   background-color: silver;
+  overflow-x: auto;
 
   .block {
+    min-width: 120px;
     width: 120px;
     height: 120px;
     display: flex;

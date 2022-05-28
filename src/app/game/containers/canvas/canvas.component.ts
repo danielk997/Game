@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {BasicBlock, Block, GreyBlock, RoadHorizontal, RoadMerge, RoadVertical} from "../../models/game/block";
+import {BasicBlock, Block} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
-import {Game} from "../../game";
+import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 
 @Component({
   selector: 'app-canvas',
@@ -149,18 +149,8 @@ function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: numbe
 }
 
 function getBlock(name: string): Block<any> {
-  switch (name) {
-    case 'Basic block':
-      return new BasicBlock();
-    case 'Grey block':
-      return new GreyBlock();
-    case 'Road vertical':
-      return new RoadVertical();
-    case 'Road horizontal':
-      return new RoadHorizontal();
-    case 'Road merge':
-      return new RoadMerge();
-  }
+  if (basicRoadMap.get(name))
+    return basicRoadMap.get(name)!
 
   return new BasicBlock();
 }

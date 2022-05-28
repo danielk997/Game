@@ -15,7 +15,7 @@ export interface Block<T> {
   data: T;
 }
 
-function createImage(path: string): HTMLImageElement {
+export function createImage(path: string): HTMLImageElement {
   const image = new Image(100, 100);
   image.src = path;
   return image;
@@ -51,38 +51,3 @@ export class GreyBlock implements Block<Building> {
   }
 }
 
-export class RoadVertical implements Block<any> {
-
-  name = 'Road vertical';
-  type = BlockType.ROAD;
-  price = 1000;
-  data: any;
-
-  get image(): HTMLImageElement {
-    return createImage(Images.roadVertical);
-  }
-}
-
-export class RoadHorizontal implements Block<any> {
-
-  name = 'Road horizontal';
-  type = BlockType.ROAD;
-  price = 1000;
-  data: any;
-
-  get image(): HTMLImageElement {
-    return createImage(Images.roadHorizontal);
-  }
-}
-
-export class RoadMerge implements Block<any> {
-
-  name = 'Road merge';
-  type = BlockType.ROAD;
-  price = 1000;
-  data: any;
-
-  get image(): HTMLImageElement {
-    return createImage(Images.roadMerge);
-  }
-}
