@@ -5,7 +5,15 @@
     (blockRemove)="onBlockRemove($event)"
     [blockName]="blockName">
   </app-canvas>
-  <app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
+  <app-menu
+    [blockName]="blockName"
+    (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
+  <div class="date">
+    <div class="wrapper">
+      <p>Hour: {{game.state.date.hour}}</p>
+      <p>Day: {{game.state.date.day}}</p>
+      <p>Week: {{game.state.date.week}}</p>
+    </div>
+  </div>
 </div>
-<button (click)="remove()">Remove</button>
 

@@ -1,6 +1,7 @@
 import {environment} from "../../../../environments/environment";
 
 export class Images {
+  static grass = `${environment.imagesPath}/grass.png`;
   static remove = `${environment.imagesPath}/remove.png`;
   static basicBlock = `${environment.imagesPath}/buildings/block1.png`;
   static greyBlock = `${environment.imagesPath}/buildings/block2.png`;

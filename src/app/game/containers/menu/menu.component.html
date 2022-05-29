@@ -1,4 +1,5 @@
 <div class="wrapper">
+  <span class="current-block">Currently Selected: <b>{{blockName}}</b></span>
   <div class="block-types">
     <button (click)="onBlockTypeChange(BlockType.ROAD)">Roads</button>
     <button (click)="onBlockTypeChange(BlockType.BUILDING)">Buildings</button>
@@ -11,6 +12,7 @@
         <img (click)="blockTypeChange.emit(road)" [src]="road.image.src" [alt]="road.name">
         <p style="margin: 5px 0 0 0">${{road.price}}</p>
       </div>
+      <div class="block"></div>
     </ng-container>
     <ng-container *ngIf="blockType === BlockType.BUILDING">
       <div class="block" *ngFor="let building of buildings">

@@ -1,20 +1,38 @@
 :host {
-  width: 40%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 260px);
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
 
+  .current-block {
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+  }
+
   .block-types {
     display: flex;
+
+    button {
+      background: #dadcff;
+      font-size: 20px;
+      padding: 2px 16px;
+      border-color: #a4abff;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
   }
 }
 
 .block-menu {
   display: flex;
-  background-color: silver;
-  overflow-x: auto;
+  background-color: #B1B7FF;
+  overflow-x: scroll;
 
   .block {
     min-width: 120px;

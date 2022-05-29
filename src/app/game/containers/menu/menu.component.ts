@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {basicBuildingMap} from "../../models/game/blocks/buildings/basic";
 import {BlockType, RemoveBlock} from "../../models/game/block";
@@ -11,6 +11,7 @@ import {BlockType, RemoveBlock} from "../../models/game/block";
 export class MenuComponent implements OnInit {
 
   @Output() blockTypeChange: EventEmitter<any> = new EventEmitter<any>();
+  @Input() blockName!: string;
   blockType: BlockType = BlockType.ROAD;
   BlockType = BlockType;
 

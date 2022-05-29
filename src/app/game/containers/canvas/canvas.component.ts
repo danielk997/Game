@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {Block, BlockType, RemoveBlock} from "../../models/game/block";
+import {Block, BlockType, createImage, RemoveBlock} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {BasicBuilding, basicBuildingMap} from "../../models/game/blocks/buildings/basic";
+import {Images} from "../../models/game/images";
 
 @Component({
   selector: 'app-canvas',
@@ -30,7 +31,6 @@ export class CanvasComponent implements AfterViewInit, OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.fillBackground();
     this.initCanvasFrames();
-    console.log(this.frames)
   }
 
   onMouseMove(event: any) {
@@ -114,7 +114,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 
   private fillBackground() {
-    this.ctx.fillStyle = 'grey'
+    this.ctx.fillStyle = this.ctx.createPattern(createImage(Images.grass), '')!
     this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
   }
 

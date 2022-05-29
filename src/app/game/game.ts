@@ -26,7 +26,7 @@ export class Game {
     this.addCitizens();
     const gameInterval = setInterval(() => {
       this.state.date.tick();
-    }, 50)
+    }, 500)
     this.state.date.subject$.subscribe(it => {
       this.updateGameState();
     })

@@ -9,7 +9,7 @@ import {Block, BlockType} from "./game/models/game/block";
 })
 export class AppComponent implements OnInit {
   title = 'game';
-  blockName = 'basic';
+  blockName = 'Remove';
 
   constructor(public game: Game) {
   }
