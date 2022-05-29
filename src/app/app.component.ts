@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Game} from "./game/game";
-import {Block} from "./game/models/game/block";
+import {Block, BlockType} from "./game/models/game/block";
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,11 @@ export class AppComponent implements OnInit {
     this.game.addBlock(block);
   }
 
-  getTax() {
+  onBlockRemove(block: Block<any>) {
+    this.game.removeBlock(block);
+  }
+
+  remove() {
     console.log(this.game.getTax())
   }
 }

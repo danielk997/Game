@@ -2,9 +2,10 @@
   <app-stats [game]="game"></app-stats>
   <app-canvas
     (blockAdd)="onBlockAdd($event)"
+    (blockRemove)="onBlockRemove($event)"
     [blockName]="blockName">
   </app-canvas>
   <app-menu (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
 </div>
-<button (click)="getTax()">Get tax</button>
+<button (click)="remove()">Remove</button>
 

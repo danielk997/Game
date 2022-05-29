@@ -1,8 +1,10 @@
 import {InfrastructureUnit} from "./infrastructure";
+import {Images} from "./images";
 
 export enum BlockType {
   BUILDING,
-  ROAD
+  ROAD,
+  REMOVE
 }
 
 export interface Block<T extends InfrastructureUnit> {
@@ -20,3 +22,11 @@ export function createImage(path: string): HTMLImageElement {
 }
 
 export const blockMap: Map<string, Block<any>> = new Map<string, Block<any>>([]);
+
+export class RemoveBlock implements Block<any> {
+  data: any;
+  image: HTMLImageElement = createImage(Images.remove);
+  name = 'Remove';
+  price = 0;
+  type: BlockType = BlockType.REMOVE;
+}

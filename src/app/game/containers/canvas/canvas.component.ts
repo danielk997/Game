@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
-import {Block} from "../../models/game/block";
+import {Block, BlockType, RemoveBlock} from "../../models/game/block";
 import {Position} from "../../models/canvas/position";
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {BasicBuilding, basicBuildingMap} from "../../models/game/blocks/buildings/basic";
@@ -15,6 +15,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
 
   @ViewChild('canvasElement') canvas: any;
   @Output() blockAdd: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
+  @Output() blockRemove: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
   @Input() blockName = '';
   gridSize = 10;
   canvasSize = {width: 1000 / 2, height: 1000 / 2};
@@ -60,7 +61,14 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 
   onClick() {
-    const block = getBlock(this.blockName);
+    const block = getBlockToAdd(this.blockName);
+    const currentBlock: CanvasFrame | undefined = this.frames.find(it => it.id === this.currentFrame?.id);
+
+    if (block.type === BlockType.REMOVE) {
+      this.removeBlock(currentBlock?.data);
+      return;
+    }
+
 
     this.frames = this.frames.map(it => {
       if (it.id === this.currentFrame?.id) {
@@ -73,13 +81,22 @@ export class CanvasComponent implements AfterViewInit, OnInit {
     });
 
     this.blockAdd.emit(block);
+  }
 
-    this.drawImage(this.currentFrame?.data?.image, {
-      x: this.currentFrame?.x,
-      y: this.currentFrame?.y,
-      width: this.currentFrame?.size,
-      height: this.currentFrame?.size
+  private removeBlock(block?: Block<any>) {
+    if(!block)
+      return;
+
+    this.frames = this.frames.map(it => {
+      if (it.id === this.currentFrame?.id) {
+        return {
+          ...it,
+          data: null
+        }
+      }
+      return it
     });
+    this.blockRemove.emit(block);
   }
 
   private getFrame(position: Position): CanvasFrame | undefined {
@@ -149,7 +166,10 @@ function getMousePos(canvas: HTMLCanvasElement, evt: any): { x: number, y: numbe
   };
 }
 
-function getBlock(name: string): Block<any> {
+function getBlockToAdd(name: string): Block<any> {
+  if (name === 'Remove')
+    return new RemoveBlock();
+
   if (basicRoadMap.get(name))
     return basicRoadMap.get(name)!
 

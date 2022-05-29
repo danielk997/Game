@@ -49,6 +49,19 @@ export class Game {
     this.updateLifeQuality();
   }
 
+  removeBlock(block: Block<any>) {
+    switch (block.type) {
+      case BlockType.BUILDING:
+        this.removeBuilding(block);
+        break;
+      case BlockType.ROAD:
+        this.removeRoad(block);
+        break;
+    }
+
+    this.updateLifeQuality();
+  }
+
   private updateGameState() {
     this.getTax();
     this.payMaintenanceCosts();
@@ -81,7 +94,7 @@ export class Game {
       return;
 
     if (this.state.population.length === 0 || this.state.money <= 0) {
-      alert('GAME OVER');
+      // alert('GAME OVER');
     }
   }
 
@@ -127,6 +140,17 @@ export class Game {
     }
   }
 
+  private removeBuilding(building: Block<Building>) {
+    this.state = {
+      ...this.state,
+      infrastructure: {
+        ...this.state.infrastructure,
+        buildings: _.pull(this.state.infrastructure.buildings, building.data)
+      },
+      money: this.state.money + Math.round(building.price * 0.95)
+    }
+  }
+
   private addRoad(road: Block<Road>) {
     this.state = {
       ...this.state,
@@ -135,6 +159,17 @@ export class Game {
         roads: [...this.state.infrastructure.roads, road.data],
       },
       money: this.state.money - road.price
+    }
+  }
+
+  private removeRoad(road: Block<Road>) {
+    this.state = {
+      ...this.state,
+      infrastructure: {
+        ...this.state.infrastructure,
+        roads: _.pull(this.state.infrastructure.roads, road.data)
+      },
+      money: this.state.money + Math.round(road.price * 0.95)
     }
   }
 }

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {basicBuildingMap} from "../../models/game/blocks/buildings/basic";
-import {BlockType} from "../../models/game/block";
+import {BlockType, RemoveBlock} from "../../models/game/block";
 
 @Component({
   selector: 'app-menu',
@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
   BlockType = BlockType;
 
   roads = [
+    new RemoveBlock(),
     ...basicRoadMap.values()
   ]
 
