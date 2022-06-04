@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {CanvasFrame} from "../../models/canvas/canvas-frame";
 import {DrawRectOptions} from "../../models/canvas/draw-rect-options";
 import {Block, BlockType, createImage, RemoveBlock} from "../../models/game/block";
@@ -6,22 +16,24 @@ import {Position} from "../../models/canvas/position";
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {BasicBuilding, basicBuildingMap} from "../../models/game/blocks/buildings/basic";
 import {Images} from "../../models/game/images";
+import {Infrastructure} from "../../models/game/infrastructure";
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.scss']
 })
-export class CanvasComponent implements AfterViewInit, OnInit {
+export class CanvasComponent implements AfterViewInit, OnInit, OnChanges {
 
   @ViewChild('canvasElement') canvas: any;
-  @Output() blockAdd: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
+  @Output() blockAdd: EventEmitter<any> = new EventEmitter<any>();
   @Output() blockRemove: EventEmitter<Block<any>> = new EventEmitter<Block<any>>();
   @Input() blockName = '';
+  @Input() infrastructure?: Infrastructure
+  @Input() frames: CanvasFrame[] = [];
   gridSize = 10;
   canvasSize = {width: 1000 / 2, height: 1000 / 2};
   ctx!: CanvasRenderingContext2D;
-  frames: CanvasFrame[] = [];
   currentFrame?: CanvasFrame;
 
   ngOnInit(): void {
@@ -31,6 +43,13 @@ export class CanvasComponent implements AfterViewInit, OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.fillBackground();
     this.initCanvasFrames();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
+    if (changes['infrastructure'].currentValue) {
+      this.fillFramesFromInfrastructure(changes['infrastructure'].currentValue);
+    }
   }
 
   onMouseMove(event: any) {
@@ -64,11 +83,12 @@ export class CanvasComponent implements AfterViewInit, OnInit {
     const block = getBlockToAdd(this.blockName);
     const currentBlock: CanvasFrame | undefined = this.frames.find(it => it.id === this.currentFrame?.id);
 
+    block.frame = this.currentFrame;
+
     if (block.type === BlockType.REMOVE) {
       this.removeBlock(currentBlock?.data);
       return;
     }
-
 
     this.frames = this.frames.map(it => {
       if (it.id === this.currentFrame?.id) {
@@ -84,7 +104,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
   }
 
   private removeBlock(block?: Block<any>) {
-    if(!block)
+    if (!block)
       return;
 
     this.frames = this.frames.map(it => {
@@ -96,6 +116,7 @@ export class CanvasComponent implements AfterViewInit, OnInit {
       }
       return it
     });
+
     this.blockRemove.emit(block);
   }
 
@@ -154,6 +175,28 @@ export class CanvasComponent implements AfterViewInit, OnInit {
         })
       }
     }
+  }
+
+  private fillFramesFromInfrastructure(infrastructure: Infrastructure) {
+    this.fillFramesFromSingleInfrastructure(infrastructure, 'roads');
+    this.fillFramesFromSingleInfrastructure(infrastructure, 'buildings');
+  }
+
+  private fillFramesFromSingleInfrastructure(infrastructure: Infrastructure, name: 'roads' | 'buildings') {
+    infrastructure[name].forEach(it => {
+      this.frames = this.frames.map(x => {
+        if (x.id === it.frame?.id) {
+          return ({
+            ...it.frame,
+            data: {
+              ...it.frame.data,
+              image: createImage(it.imageSrc ?? '')
+            }
+          })
+        }
+        return x;
+      });
+    })
   }
 }
 

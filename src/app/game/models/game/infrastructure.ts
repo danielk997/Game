@@ -1,3 +1,5 @@
+import {CanvasFrame} from "../canvas/canvas-frame";
+
 export enum Prestige {
   LOW,
   NORMAL,
@@ -12,6 +14,8 @@ export interface Infrastructure {
 export interface InfrastructureUnit {
   maintenanceCost: number;
   lifeQuality: number;
+  frame?: CanvasFrame;
+  imageSrc?: string;
 }
 
 export interface Building extends InfrastructureUnit {

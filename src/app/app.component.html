@@ -1,8 +1,13 @@
 <div class="wrapper">
+  <div class="game-state">
+    <button (click)="onLoadGame()" mat-flat-button color="primary">Load game</button>
+    <br><br>
+    <button (click)="onSaveGame()" mat-flat-button color="primary">Save game</button></div>
   <app-stats [game]="game"></app-stats>
   <app-canvas
     (blockAdd)="onBlockAdd($event)"
     (blockRemove)="onBlockRemove($event)"
+    [infrastructure]="infrastructure"
     [blockName]="blockName">
   </app-canvas>
   <app-menu

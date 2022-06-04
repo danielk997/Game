@@ -1,5 +1,6 @@
 import {InfrastructureUnit} from "./infrastructure";
 import {Images} from "./images";
+import {CanvasFrame} from "../canvas/canvas-frame";
 
 export enum BlockType {
   BUILDING,
@@ -13,6 +14,7 @@ export interface Block<T extends InfrastructureUnit> {
   image: HTMLImageElement;
   price: number;
   data: T;
+  frame?: CanvasFrame;
 }
 
 export function createImage(path: string): HTMLImageElement {

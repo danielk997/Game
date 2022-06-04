@@ -134,7 +134,13 @@ export class Game {
       ...this.state,
       infrastructure: {
         ...this.state.infrastructure,
-        buildings: [...this.state.infrastructure.buildings, building.data],
+        buildings: [...this.state.infrastructure.buildings, {
+          ...building.data,
+          frame: {
+            ...building.frame!
+          },
+          imageSrc: building.image.src
+        }],
       },
       money: this.state.money - building.price
     }
@@ -156,7 +162,13 @@ export class Game {
       ...this.state,
       infrastructure: {
         ...this.state.infrastructure,
-        roads: [...this.state.infrastructure.roads, road.data],
+        roads: [...this.state.infrastructure.roads, {
+          ...road.data,
+          frame: {
+            ...road.frame!
+          },
+          imageSrc: road.image.src
+        }],
       },
       money: this.state.money - road.price
     }
@@ -183,13 +195,21 @@ export interface GameState {
   taxPercentage: number;
 }
 
-class GameDate {
+export class GameDate {
 
   subject$: Subject<void> = new Subject<void>();
 
   hour = 0;
   day = 1;
   week = 1;
+
+  constructor(date?: { hour: number, day: number, week: number }) {
+    if (date) {
+      this.hour = date.hour;
+      this.day = date.day;
+      this.week = date.week;
+    }
+  }
 
   tick() {
     this.hour++;
