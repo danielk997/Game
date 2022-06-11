@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <div class="game-state">
-    <button (click)="onLoadGame()" mat-flat-button color="primary">Load game</button>
-    <br><br>
-    <button (click)="onSaveGame()" mat-flat-button color="primary">Save game</button></div>
+  <app-state-buttons
+    (save)="onSaveGame()"
+    (load)="onLoadGame()"
+  ></app-state-buttons>
   <app-stats [game]="game"></app-stats>
   <app-canvas
     (blockAdd)="onBlockAdd($event)"
@@ -13,12 +13,6 @@
   <app-menu
     [blockName]="blockName"
     (blockTypeChange)="onBlockTypeChange($event)"></app-menu>
-  <div class="date">
-    <div class="wrapper">
-      <p>Hour: {{game.state.date.hour}}</p>
-      <p>Day: {{game.state.date.day}}</p>
-      <p>Week: {{game.state.date.week}}</p>
-    </div>
-  </div>
+  <app-game-date [game]="game"></app-game-date>
 </div>
 

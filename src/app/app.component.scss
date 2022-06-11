@@ -5,23 +5,3 @@
   flex-direction: column;
 }
 
-.date {
-  position: fixed;
-  bottom: -130px;
-  right: -80px;
-  width: 400px;
-  height: 400px;
-  background: #747bf5;
-  border-radius: 100%;
-
-  .wrapper {
-    font-size: 22px;
-    color: white;
-  }
-}
-
-.game-state {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-}

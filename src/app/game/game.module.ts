@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CanvasComponent } from './containers/canvas/canvas.component';
 import { MenuComponent } from './containers/menu/menu.component';
 import { StatsComponent } from './containers/stats/stats.component';
+import { GameDateComponent } from './containers/game-date/game-date.component';
+import { StateButtonsComponent } from './containers/state-buttons/state-buttons.component';
 
 
 
@@ -10,13 +12,17 @@ import { StatsComponent } from './containers/stats/stats.component';
   declarations: [
     CanvasComponent,
     MenuComponent,
-    StatsComponent
+    StatsComponent,
+    GameDateComponent,
+    StateButtonsComponent
   ],
-    exports: [
-        CanvasComponent,
-        MenuComponent,
-        StatsComponent
-    ],
+  exports: [
+    CanvasComponent,
+    MenuComponent,
+    StatsComponent,
+    GameDateComponent,
+    StateButtonsComponent
+  ],
   imports: [
     CommonModule
   ]

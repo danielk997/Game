@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     const state = StorageService.getItem('gameState')
 
     if (!state) {
-      alert('No date to load')
+      alert('No data to load')
       return;
     }
 
