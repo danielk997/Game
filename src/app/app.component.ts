@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Game, GameDate} from "./game/game";
 import {Block} from "./game/models/game/block";
 import {StorageService} from "./storage.service";
-import {Infrastructure, InfrastructureUnit} from "./game/models/game/infrastructure";
+import {Infrastructure} from "./game/models/game/infrastructure";
 
 @Component({
   selector: 'app-root',
@@ -71,16 +71,4 @@ export class AppComponent implements OnInit {
     StorageService.setItem('gameState', stateToSave);
     alert('Game saved');
   }
-
-  remove() {
-    console.log(this.game.getTax())
-  }
-
-  // private getFramesFromState(state: GameState): CanvasFrame[] {
-  //   const infrastructure = state.infrastructure;
-  //   const roadFrames = infrastructure.roads.map(it => it.frame!);
-  //   const buildingFrames = infrastructure.buildings.map(it => it.frame!);
-  //
-  //   return [...roadFrames, ...buildingFrames];
-  // }
 }

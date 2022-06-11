@@ -3,7 +3,7 @@
   <div class="block-types">
     <button (click)="onBlockTypeChange(BlockType.ROAD)">Roads</button>
     <button (click)="onBlockTypeChange(BlockType.BUILDING)">Buildings</button>
-    <button>Plants</button>
+    <button (click)="onBlockTypeChange(BlockType.PLANT)">Plants</button>
   </div>
   <div class="block-menu">
     <ng-container *ngIf="blockType === BlockType.ROAD">
@@ -19,6 +19,13 @@
         <p style="margin: 0 0 5px 0">{{building.name}}</p>
         <img (click)="blockTypeChange.emit(building)" [src]="building.image.src" [alt]="building.name">
         <p style="margin: 5px 0 0 0">${{building.price}}</p>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="blockType === BlockType.PLANT">
+      <div class="block" *ngFor="let plant of plants">
+        <p style="margin: 0 0 5px 0">{{plant.name}}</p>
+        <img (click)="blockTypeChange.emit(plant)" [src]="plant.image.src" [alt]="plant.name">
+        <p style="margin: 5px 0 0 0">${{plant.price}}</p>
       </div>
     </ng-container>
   </div>

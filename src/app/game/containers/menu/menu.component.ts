@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {basicBuildingMap} from "../../models/game/blocks/buildings/basic";
 import {BlockType, RemoveBlock} from "../../models/game/block";
+import {basicPlantMap} from "../../models/game/blocks/plants/basic";
 
 @Component({
   selector: 'app-menu',
@@ -18,11 +19,15 @@ export class MenuComponent implements OnInit {
   roads = [
     new RemoveBlock(),
     ...basicRoadMap.values()
-  ]
+  ];
 
   buildings = [
     ...basicBuildingMap.values()
-  ]
+  ];
+
+  plants = [
+    ...basicPlantMap.values()
+  ];
 
   constructor() {
   }

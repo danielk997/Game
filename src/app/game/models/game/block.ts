@@ -5,6 +5,7 @@ import {CanvasFrame} from "../canvas/canvas-frame";
 export enum BlockType {
   BUILDING,
   ROAD,
+  PLANT,
   REMOVE
 }
 

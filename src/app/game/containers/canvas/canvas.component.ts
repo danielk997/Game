@@ -17,6 +17,7 @@ import {basicRoadMap} from "../../models/game/blocks/roads/basic";
 import {BasicBuilding, basicBuildingMap} from "../../models/game/blocks/buildings/basic";
 import {Images} from "../../models/game/images";
 import {Infrastructure} from "../../models/game/infrastructure";
+import {basicPlantMap} from "../../models/game/blocks/plants/basic";
 
 @Component({
   selector: 'app-canvas',
@@ -214,10 +215,13 @@ function getBlockToAdd(name: string): Block<any> {
     return new RemoveBlock();
 
   if (basicRoadMap.get(name))
-    return basicRoadMap.get(name)!
+    return basicRoadMap.get(name)!;
+
+  if(basicPlantMap.get(name))
+    return basicPlantMap.get(name)!;
 
   if (basicBuildingMap.get(name))
-    return basicBuildingMap.get(name)!
+    return basicBuildingMap.get(name)!;
 
   return new BasicBuilding();
 }
