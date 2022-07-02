@@ -26,7 +26,7 @@ export class Game {
     this.addCitizens();
     const gameInterval = setInterval(() => {
       this.state.date.tick();
-    }, 500)
+    }, 10)
     this.state.date.subject$.subscribe(it => {
       this.updateGameState();
     })
@@ -67,6 +67,9 @@ export class Game {
     this.payMaintenanceCosts();
     this.addCitizens();
     this.gameOver();
+    if (this.state.date.week % 3 === 0) {
+      this.randomEvent();
+    }
   }
 
   get totalCapability(): number {
@@ -184,6 +187,12 @@ export class Game {
       money: this.state.money + Math.round(road.price * 0.95)
     }
   }
+
+  private randomEvent() {
+    const event = _.sample(randomEvents);
+    alert(event?.message);
+    this.state = event!.updateState(this.state);
+  }
 }
 
 export interface GameState {
@@ -226,3 +235,30 @@ export class GameDate {
   }
 }
 
+interface RandomEvent {
+  message: string;
+
+  updateState(state: GameState, helpers?: RandomEventHelpers): GameState;
+}
+
+interface RandomEventHelpers {
+  totalCapability: number;
+}
+
+const randomEvents: RandomEvent[] = [
+  {
+    message: 'W pobliżu miasta powstała nowa fabryka. Populacja zwiększa się',
+    updateState(state: GameState): GameState {
+      state.population = [...state.population, ...[...Array(30)].map(() => new DefaultCitizen())];
+      return state;
+    }
+  },
+  {
+    message: 'Na pograniczu miasta powstaje elektrownia węglowa. Populacja zwiększa się jednak poziom życia spada',
+    updateState(state: GameState): GameState {
+      state.population = [...state.population, ...[...Array(20)].map(() => new DefaultCitizen())];
+      state.lifeQuality -= 10;
+      return state;
+    }
+  }
+]
